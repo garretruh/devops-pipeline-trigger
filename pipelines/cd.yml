@@ -1,0 +1,21 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: ubuntu-18.04
+
+resources:
+  pipelines:
+    - pipeline: ci
+      source: /devops-pipeline-trigger/ci
+      trigger:
+        branches:
+          include:
+            - release/*
+
+stages:
+  - stage: Deploy
+    jobs:
+      - job: Deploy
+        steps:
+          - bash: git rev-parse --short HEAD
